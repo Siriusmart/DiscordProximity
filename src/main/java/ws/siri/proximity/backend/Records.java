@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
@@ -89,7 +90,7 @@ public class Records {
                     throw new RuntimeException("Fetch whois returned status code " + statusCode);
                 }
 
-                Map<?, ?> parsed = new Gson().fromJson(response.toString(), Map.class);
+                Map<?, ?> parsed = new Gson().fromJson(EntityUtils.toString(response.getEntity()), Map.class);
 
                 for(Entry<?, ?> entry : ((Map<?, ?>) parsed).entrySet()) {
                     String discordID = (String) entry.getKey();

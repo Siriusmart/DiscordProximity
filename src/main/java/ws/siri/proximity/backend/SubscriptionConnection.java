@@ -94,7 +94,6 @@ public class SubscriptionConnection {
         switch(message.t) {
             case "sub":
                 String[] subList = ((List<Object>) message.c).toArray(new String[0]);
-                System.out.println(Arrays.toString(subList));
                 Records.subscribe(subList);
                 break;
             case "unsub":
