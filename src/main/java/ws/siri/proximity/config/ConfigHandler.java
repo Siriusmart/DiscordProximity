@@ -1,4 +1,4 @@
-package com.example.examplemod.config;
+package ws.siri.proximity.config;
 
 import net.minecraftforge.common.config.Configuration;
 

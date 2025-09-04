@@ -1,4 +1,4 @@
-package com.example.examplemod.events;
+package ws.siri.proximity.events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;

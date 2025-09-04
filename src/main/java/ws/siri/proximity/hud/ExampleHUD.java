@@ -1,4 +1,4 @@
-package com.example.examplemod.hud;
+package ws.siri.proximity.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

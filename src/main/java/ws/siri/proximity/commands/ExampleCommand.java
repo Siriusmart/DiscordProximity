@@ -1,10 +1,13 @@
-package com.example.examplemod.commands;
+package ws.siri.proximity.commands;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 
+import java.util.Collection;
 import java.util.List;
 
 public class ExampleCommand extends CommandBase {
@@ -26,6 +29,13 @@ public class ExampleCommand extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
+
+        Collection<NetworkPlayerInfo> players = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap();
+        for(NetworkPlayerInfo player : players) {
+            String ign = player.getGameProfile().getName();
+            sender.addChatMessage(new ChatComponentText(ign));
+        }
+
         // this code here runs when you use the command ingame
         sender.addChatMessage(new ChatComponentText("Hey your command is running!"));
 

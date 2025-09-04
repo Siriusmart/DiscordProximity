@@ -10,11 +10,15 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
+plugins {
+    id "java"
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+}
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.0"              // replace with the version of your mod that you have in your main mod file
-group = "com.yourname.modid" // replace with your package name see http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"   // this will be the name of the .jar it can be whatever you like
+group = "ws.siri.proximity" // replace with your package name see http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "discordproximity"   // this will be the name of the .jar it can be whatever you like
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -24,6 +28,11 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     makeObfSourceJar = false
+}
+
+configurations {
+    shade
+    implementation.extendsFrom shade
 }
 
 dependencies {
@@ -38,6 +47,16 @@ dependencies {
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+    compile 'javax.websocket:javax.websocket-api:1.1'
+    compile 'org.glassfish.tyrus:tyrus-server:1.22'
+    compile 'org.glassfish.tyrus:tyrus-core:1.22'
+    compile 'org.glassfish.tyrus:tyrus-container-grizzly-server:1.22'
+    compile 'jakarta.websocket:jakarta.websocket-api:2.0.0'
+    shade('javax.websocket:javax.websocket-api:1.1')
+    shade('org.glassfish.tyrus:tyrus-server:1.22')
+    shade('org.glassfish.tyrus:tyrus-core:1.22')
+    shade('org.glassfish.tyrus:tyrus-container-grizzly-server:1.22')
+    shade('jakarta.websocket:jakarta.websocket-api:2.0.0')
 
     // the 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
@@ -63,4 +82,19 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+shadowJar {
+    dependencies {
+        //we remove gson because it belongs to the public api and will break shading
+        //exclude(dependency("com.google.code.gson:gson:2.8.6"))
+    }
+    configurations = [project.configurations.shade]
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE //prevent duplicates
+    classifier "" //prevent creation of unshadowed jar
+}
+
+reobf {
+    //reobfuscate the shadowed jar
+    shadowJar {}
 }
