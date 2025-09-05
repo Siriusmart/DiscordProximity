@@ -56,11 +56,9 @@ public class VolumeUpdater {
 
         HashMap<String, Double> diff = Records.pushPlayers(distances);
 
-        /*
         if(diff.isEmpty()) {
             return;
         }
-        */
 
         // CompletableFuture.runAsync(() -> {
             SubscriptionConnection.broadcast(new SubscriptionConnection.Message("set", diff));

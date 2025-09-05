@@ -110,6 +110,8 @@ public class Records {
                         }
                     }
 
+                    updated = true;
+
                     fetchCache.put(discordID, new CachedEntry(newIgns, now));
                     for(String ign : newIgns) {
                         reverseTranslationTable.put(ign, discordID);
@@ -183,8 +185,7 @@ public class Records {
     private static HashMap<String, Double> volumeCache = new HashMap<>();
 
     public static double getVolume(String ign, double distance) {
-        // TODO
-        return 1.0;
+        return 2 * Math.pow(distance + 2, -0.9);
     }
 
     public static HashMap<String, Double> volumeDiff(HashMap<String, Double> old, HashMap<String, Double> current) {
@@ -194,7 +195,7 @@ public class Records {
             String ign = oldEntry.getKey();
 
             if(!current.containsKey(ign)) {
-                diff.put(ign, null);
+                diff.put(ign, -1.0);
                 continue;
             }
 
@@ -221,7 +222,7 @@ public class Records {
      */
     public static HashMap<String, Double> pushPlayers(HashMap<String, Double> distances) {
         if(distances.equals(distanceCache)) {
-            return volumeCache;
+            return new HashMap<>();
         } else {
             distanceCache = distances;
         }

@@ -103,6 +103,8 @@ public class SubscriptionConnection {
             case "clear":
                 Records.unsubscribeAll();
                 break;
+            default:
+                Logger.getLogger("WS proximity onMessage").log(Level.WARNING, "Unknown message type " + message.t);
         }
     }
 
