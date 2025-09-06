@@ -7,21 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class VolumeUpdater {
     @SubscribeEvent
@@ -54,7 +46,8 @@ public class VolumeUpdater {
             }
         }
 
-        HashMap<String, Double> diff = Records.pushPlayers(distances);
+
+        HashMap<String, Double> diff = Records.pushPlayers(distances, activePlayersInWorld);
 
         if(diff.isEmpty()) {
             return;

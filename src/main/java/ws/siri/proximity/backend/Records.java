@@ -20,9 +20,6 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
-import scala.Option;
-import scala.util.parsing.json.JSON;
-
 public class Records {
     /*
      * List of DiscordIDs that are subscribed to, used to build activePlayerNames
@@ -72,6 +69,8 @@ public class Records {
     }
 
     private static boolean fetchNow(Instant now, HashSet<String> shouldFetch) {
+        if(shouldFetch.isEmpty()) return false;
+
         final String endpoint = "https://proximity.siri.ws/api/v1/whois";
         boolean updated = false;
 
@@ -188,22 +187,28 @@ public class Records {
         return 2 * Math.pow(distance + 2, -0.9);
     }
 
-    public static HashMap<String, Double> volumeDiff(HashMap<String, Double> old, HashMap<String, Double> current) {
+    public static boolean idInWorld(String id, HashSet<String> activePlayersInWorld) {
+        return activePlayersInWorld.stream().anyMatch((ign) -> {
+            return reverseTranslationTable.get(ign).equals(id);
+        });
+    }
+
+    public static HashMap<String, Double> volumeDiff(HashMap<String, Double> old, HashMap<String, Double> current, HashSet<String> activePlayersInWorld) {
         HashMap<String, Double> diff = new HashMap<>();
 
         for(Entry<String, Double> oldEntry : old.entrySet()) {
-            String ign = oldEntry.getKey();
+            String id = oldEntry.getKey();
 
-            if(!current.containsKey(ign)) {
-                diff.put(ign, -1.0);
+           if(!current.containsKey(id)) {
+                diff.put(id, idInWorld(id, activePlayersInWorld) ? 0.0 : 1.0);
                 continue;
             }
 
             Double oldValue = oldEntry.getValue();
-            Double newValue = current.get(ign);
+            Double newValue = current.get(id);
 
             if(!oldValue.equals(newValue)) {
-                diff.put(ign, newValue);
+                diff.put(id, newValue);
             }
         }
 
@@ -220,7 +225,7 @@ public class Records {
      * Takes: Map<IGN, distance>
      * Returns: Map<Discord ID, volume multiplier>
      */
-    public static HashMap<String, Double> pushPlayers(HashMap<String, Double> distances) {
+    public static HashMap<String, Double> pushPlayers(HashMap<String, Double> distances, HashSet<String> activePlayersInWorld) {
         if(distances.equals(distanceCache)) {
             return new HashMap<>();
         } else {
@@ -238,7 +243,7 @@ public class Records {
             newVolumes.put(reverseTranslationTable.get(ign), getVolume(ign, distance));
         }
 
-        HashMap<String, Double> diff = volumeDiff(volumeCache, newVolumes);
+        HashMap<String, Double> diff = volumeDiff(volumeCache, newVolumes, activePlayersInWorld);
         volumeCache = newVolumes;
 
         return diff;
