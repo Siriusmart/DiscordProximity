@@ -4,7 +4,7 @@ DiscordProximity makes it possible to use proximity voice chats on Discord. Curr
 - Forge 1.8.9
 
 > [!WARNING]  
-> Using client mods are against Discord's TOS, which they have a track record of not enforcing it. I am not responsible for any loss that happens because of this.
+> Using client mods are against Discord's TOS, which they have a track record of not enforcing it. Please don't send screenshots or video clips or you using it, I am not responsible for any loss that happens because of this.
 
 ## Discord Proximity Chat Setup Guide
 
