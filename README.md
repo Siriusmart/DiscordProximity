@@ -9,7 +9,7 @@ DiscordProximity is a client side proximity chat plugin for Vencord, currently s
 2. Install this custom build of Vencord and restart Discord. ([Windows](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstaller.exe>)) ([MacOS](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstaller.MacOS.zip>)) ([Linux](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstallerCli-linux>)) ([Userscript/Browser](<https://github.com/Siriusmart/Vencord/releases/latest/download/Vencord.user.js>))
 3. Check if Vencord is installed - in the user settings shall you see a Vencord section to your left.
 4. Go to the plugins tab and turn on **DiscordProximity**.
-5. Run the command `.iam [Minecraft IGN]` anywhere in [this server](https://discord.gg/N8HQ2HsDNH){:target="_blank"}, you must use the __exact upper/lowercase as your IGN__ in the command.
+5. Run the command `.iam [Minecraft IGN]` anywhere in [this server](https://discord.gg/N8HQ2HsDNH), you must use the __exact upper/lowercase as your IGN__ in the command.
 Now that it's set up you won't have to do this again, join a VC with others who also have the mod and it should just work.
 
 ## FAQ
