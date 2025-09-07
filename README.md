@@ -3,7 +3,7 @@
 DiscordProximity is a client side proximity chat plugin for Vencord, currently supports:
 - Forge 1.8.9
 
-## Instllation & Setup
+## Installation & Setup
 
 1. Install [Discord Proximity for Forge 1.8.9](<https://github.com/Siriusmart/DiscordProximity/releases/latest/download/discordproximity.jar>) and restart Minecraft.
 2. Install this custom build of Vencord and restart Discord. ([Windows](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstaller.exe>)) ([MacOS](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstaller.MacOS.zip>)) ([Linux](<https://github.com/Siriusmart/VencordInstaller/releases/latest/download/VencordInstallerCli-linux>)) ([Userscript/Browser](<https://github.com/Siriusmart/Vencord/releases/latest/download/Vencord.user.js>))
