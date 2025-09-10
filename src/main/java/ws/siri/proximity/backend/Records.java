@@ -183,11 +183,13 @@ public class Records {
     private static HashMap<String, Double> distanceCache = new HashMap<>();
     private static HashMap<String, Double> volumeCache = new HashMap<>();
 
-    private static final double force = 1.5;
+    private static final double cap = 1.3;
+    private static final double scale = 1.3;
+    private static final double force = 0.9;
     private static final double flattening = 2.0;
 
     public static double getVolume(String ign, double distance) {
-        return flattening * Math.pow(distance + flattening, -force);
+        return Math.min(scale * flattening * Math.pow(distance + flattening, -force), cap);
     }
 
     public static boolean idInWorld(String id, HashSet<String> activePlayersInWorld) {
