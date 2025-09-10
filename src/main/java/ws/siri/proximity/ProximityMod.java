@@ -23,17 +23,20 @@ public class ProximityMod { // select ExampleMod and hit shift+F6 to rename it
     public static final String MODNAME = "Discord Proximity";// the name of your mod
     public static final String VERSION = "0.1.0";           // the current version of your mod
 
+    public static final Logger logger = Logger.getLogger("DiscordProximity");
+
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        Logger.getLogger("Proximity init").log(Level.SEVERE, "Starting web server at port 25560");
+        logger.log(Level.SEVERE, "Starting web server at port 25560.");
         // Server server = new Server(new InetSocketAddress("127.0.0.1", 25560));
         Server server = new Server("localhost", 25560, "/api", null, SubscriptionConnection.class);
         // Handler handler = new ServletContextHandler();
         // server.setHandler(handler);
         try {
             server.start();
+            logger.log(Level.INFO, "WS server started.");
         } catch (Exception e) {
-            Logger.getLogger("Proximity init").log(Level.INFO, "Failed to start web server " + e);
+            logger.log(Level.INFO, "Failed to start web server " + e + ".");
         }
         MinecraftForge.EVENT_BUS.register(new VolumeUpdater());
     }

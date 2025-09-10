@@ -20,6 +20,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 
+import ws.siri.proximity.ProximityMod;
+
 @ServerEndpoint(
     value = "/subscription",
     encoders = { SubscriptionConnection.MessageEncoder.class }, 
@@ -83,6 +85,8 @@ public class SubscriptionConnection {
         this.session = session;
         connections.add(this);
 
+        ProximityMod.logger.log(Level.INFO, "New WS connection on /subscription");
+
         Message message = new Message();
         message.t = "connected";
         this.session.getBasicRemote().sendObject(message);
@@ -90,6 +94,7 @@ public class SubscriptionConnection {
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException {
+        ProximityMod.logger.log(Level.INFO, "t=" + message.t + "c=" + message.c);
         switch(message.t) {
             case "sub":
                 String[] subList = ((List<Object>) message.c).toArray(new String[0]);
@@ -103,7 +108,7 @@ public class SubscriptionConnection {
                 Records.unsubscribeAll();
                 break;
             default:
-                Logger.getLogger("WS proximity onMessage").log(Level.WARNING, "Unknown message type " + message.t);
+                ProximityMod.logger.log(Level.WARNING, "onMessage: unknown message type " + message.t + ".");
         }
     }
 
@@ -114,7 +119,7 @@ public class SubscriptionConnection {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        Logger.getLogger("Subscription Endpoint").log(Level.SEVERE, throwable.toString());
+        ProximityMod.logger.log(Level.SEVERE, "onError: " + throwable.toString());
     }
 
     public static void broadcast(Message message) {
@@ -122,7 +127,7 @@ public class SubscriptionConnection {
             try {
                 conn.session.getBasicRemote().sendObject(message);
             } catch (Exception e) {
-                Logger.getLogger("Subscription broadcast").log(Level.SEVERE, "Failed to send object to a client " + e);
+                ProximityMod.logger.log(Level.SEVERE, "Broadcast failed: Failed to send object to a client " + e);
             }
         }
     }

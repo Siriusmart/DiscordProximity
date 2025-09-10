@@ -185,7 +185,7 @@ public class Records {
 
     private static final double cap = 1.3;
     private static final double scale = 1.3;
-    private static final double force = 0.9;
+    private static final double force = 1.2;
     private static final double flattening = 2.0;
 
     public static double getVolume(String ign, double distance) {
