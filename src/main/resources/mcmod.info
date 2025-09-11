@@ -5,11 +5,11 @@
   "description": "Discord based proximity voice chat.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["Put your name here!"],
+  "url": "https://github.com/siriusmart/discordproximity",
+  "updateUrl": "https://github.com/siriusmart/discordproximity",
+  "authorList": ["Siriusmart<sirius@siri.ws>"],
   "credits": "",
-  "logoFile": "",
+  "logoFile": "logo.png",
   "screenshots": [],
   "dependencies": []
 }

@@ -94,7 +94,7 @@ public class SubscriptionConnection {
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException {
-        ProximityMod.logger.log(Level.INFO, "t=" + message.t + "c=" + message.c);
+        ProximityMod.logger.log(Level.INFO, "t=" + message.t + " | c=" + message.c);
         switch(message.t) {
             case "sub":
                 String[] subList = ((List<Object>) message.c).toArray(new String[0]);

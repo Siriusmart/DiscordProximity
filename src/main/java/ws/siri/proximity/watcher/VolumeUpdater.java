@@ -14,8 +14,11 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.CompletableFuture;
 
 public class VolumeUpdater {
+    private static CompletableFuture<Void> previousMessage = CompletableFuture.completedFuture(null);
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         NetHandlerPlayClient nethandler = Minecraft.getMinecraft().getNetHandler();
@@ -53,8 +56,9 @@ public class VolumeUpdater {
             return;
         }
 
-        // CompletableFuture.runAsync(() -> {
+        previousMessage = previousMessage.thenRunAsync(() -> {
             SubscriptionConnection.broadcast(new SubscriptionConnection.Message("set", diff));
-        // });
+        });
+
     }
 }

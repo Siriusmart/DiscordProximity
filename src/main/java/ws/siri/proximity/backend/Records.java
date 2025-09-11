@@ -157,6 +157,8 @@ public class Records {
     public static void unsubscribeAll() {
         activeDiscordIDs.clear();
         activePlayerNames.clear();
+        volumeCache.clear();
+        distanceCache.clear();
     }
 
     public static void unsubscribe(String[] unsubscribe) {
