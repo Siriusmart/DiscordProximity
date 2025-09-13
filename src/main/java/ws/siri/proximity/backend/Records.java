@@ -1,5 +1,7 @@
 package ws.siri.proximity.backend;
 
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
@@ -11,8 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
+import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -75,6 +82,15 @@ public class Records {
         boolean updated = false;
 
         try {
+            TrustStrategy trustStrategy = new TrustStrategy() {
+                @Override
+                public boolean isTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+                    return true;
+                }
+            };
+
+            SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, trustStrategy).build();
+            SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext);
             final HttpPost httpPost = new HttpPost(endpoint);
             final String json = "{\"ids\":["+shouldFetch.stream().map((name) -> "\"" + name + "\"").collect(Collectors.joining(","))+"]}";
             final StringEntity entity = new StringEntity(json);
@@ -82,7 +98,7 @@ public class Records {
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
 
-            try (CloseableHttpClient client = HttpClients.createDefault();
+            try (CloseableHttpClient client = HttpClients.custom().setSSLSocketFactory(sslSocketFactory).build();
                     CloseableHttpResponse response = (CloseableHttpResponse) client.execute(httpPost)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 if(statusCode > 299 || statusCode < 200) {
@@ -206,7 +222,7 @@ public class Records {
         for(Entry<String, Double> oldEntry : old.entrySet()) {
             String id = oldEntry.getKey();
 
-           if(!current.containsKey(id)) {
+            if(!current.containsKey(id)) {
                 diff.put(id, idInWorld(id, activePlayersInWorld) ? 0.0 : 1.0);
                 continue;
             }

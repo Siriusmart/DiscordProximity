@@ -27,7 +27,7 @@ public class ProximityMod { // select ExampleMod and hit shift+F6 to rename it
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        logger.log(Level.SEVERE, "Starting web server at port 25560.");
+        logger.log(Level.INFO, "Starting web server at port 25560.");
         Server server = new Server("localhost", 25560, "/api", null, SubscriptionConnection.class);
         try {
             server.start();
