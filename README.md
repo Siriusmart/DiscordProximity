@@ -33,7 +33,7 @@ A: The commands `.whoami`, `.iam` and `iamnot` should answer your question.
 
 ***Q: Why should I trust you that this is not a virus?***
 A: You don't have to, __trust the code__ instead. Which you can look at here:
--  [DiscordProximity - Vencord plugin](<https://github.com/Siriusmart/Vencord/blob/main/src/plugins/discordProximity/index.tsx>)
+-  [DiscordProximity - Vencord plugin](<https://github.com/Siriusmart/equicord/tree/main/src/plugins/discordProximity>)
 - [DiscordProximity - Forge mod](<https://github.com/Siriusmart/DiscordProximity>)
 If you vaguely know anything about programming, I am more than happy to explain to you what each line of code does in a VC.
 
